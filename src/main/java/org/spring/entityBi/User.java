@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 
@@ -28,6 +30,14 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Diary diary;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_section",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "section_id")}
+    )
+    private Set<Section> sections = new HashSet<>();
 
 
     public User(String name, LocalDate dateOfBirth) {

@@ -1,7 +1,10 @@
 package org.spring;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.spring.dao.UserDaoBi;
 import org.spring.entityBi.Diary;
+import org.spring.entityBi.Section;
 import org.spring.entityBi.User;
 import org.spring.utill.HibernateUtil;
 
@@ -24,25 +27,32 @@ public class AppBiDirection {
         User user1 = new User( "Dima", LocalDate.of(1989, 12, 31), diary2);
         User user2 = new User( "Alina", LocalDate.of(1999, 5, 8), diary3);
 
-        diary.setUser(user);
-        diary2.setUser(user1);
-        diary3.setUser(user2);
-        diary3.getMarksOfRussia().add(5);
-        diary3.getMarksOfRussia().add(4);
-        diary3.getMarksOfRussia().add(3);
-        diary3.getMarksOfRussia().add(2);
-
         UserDaoBi userDao = new UserDaoBi();
-//        userDao.saveUser(user1);
-//        userDao.saveUser(user);
-        System.out.println(userDao.findUsers());
 
-        User userFromTable = userDao.findUserById(1);
-        System.out.println(userFromTable.getName());
-        System.out.println(userFromTable.getDiary().getNameOfSchool());
-        System.out.println("Оценки по русскому языку" + userFromTable.getDiary().getMarksOfRussia());
-        System.out.println("Оценки по литературе" +userFromTable.getDiary().getMarksOfLiterature());
-        System.out.println("Оценки по математике" +userFromTable.getDiary().getMarksOfMath());
+        Section section = new Section("Football", 10500);
+        user.getSections().add(section);
+        userDao.saveUser(user);
+        //CRUD методы для секции и добавить связь ManyToMany тренер и секции,CRUD методы для тренера, можно получить тренера, а после этого получить его секции
+
+//        diary.setUser(user);
+//        diary2.setUser(user1);
+//        diary3.setUser(user2);
+//        diary3.getMarksOfRussia().add(5);
+//        diary3.getMarksOfRussia().add(4);
+//        diary3.getMarksOfRussia().add(3);
+//        diary3.getMarksOfRussia().add(2);
+//
+//        UserDaoBi userDao = new UserDaoBi();
+////        userDao.saveUser(user1);
+////        userDao.saveUser(user);
+//        System.out.println(userDao.findUsers());
+//
+//        User userFromTable = userDao.findUserById(1);
+//        System.out.println(userFromTable.getName());
+//        System.out.println(userFromTable.getDiary().getNameOfSchool());
+//        System.out.println("Оценки по русскому языку" + userFromTable.getDiary().getMarksOfRussia());
+//        System.out.println("Оценки по литературе" +userFromTable.getDiary().getMarksOfLiterature());
+//        System.out.println("Оценки по математике" +userFromTable.getDiary().getMarksOfMath());
 
         // userDao.saveUser(new User("Andrey", LocalDate.of(1990, 1, 25)));
 
@@ -55,7 +65,7 @@ public class AppBiDirection {
 //        userById.setDiary(diary3);
 //        userDao.updateUser(userById);
 //
-        HibernateUtil.shutdown();
+        //HibernateUtil.shutdown();
 
     }
 }
